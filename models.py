@@ -1,5 +1,6 @@
-from sqlmodel import SQLModel, Field, create_engine
+from sqlmodel import SQLModel, Field, create_engine, Relationship
 from enum import Enum
+from datetime import date
 
 
 """ create_engine <--Cria o banco de dados 
@@ -25,6 +26,12 @@ class Status(Enum):
     EM_IMPLANTACAO = 'IMPLANTANDO'
 
 
+class Tipos(Enum):
+
+    ENTRADA = 'Entrada'
+    SAIDA = 'Saida'
+
+
 """ Criando a class conta dentro dela existe a tabela onde contem os campos que vamos trabalhar """
 
 
@@ -34,6 +41,15 @@ class Conta(SQLModel, table=True):
     valor: float
     banco: Bancos = Field(default=Bancos.NUBANK)
     status: Status = Field(default=Status.ATIVO)
+
+
+class Historico(SQLModel, table=True):
+    id: int = Field(primary_key=True)
+    conta_id: int = Field(foreign_key="conta.id")
+    conta: Conta = Relationship()
+    tipo: Tipos = Field(default=Tipos.ENTRADA)
+    valor: float
+    data: date
 
 
 """ Aqui estamos definitivamente informando ao Python que ele deve criar um banco de dados com as informações fornecidas, passamos o nome do banco e qual tipo de banco vamos usar: no caso SQLlite """
