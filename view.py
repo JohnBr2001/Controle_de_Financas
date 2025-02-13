@@ -57,6 +57,7 @@ def movimentar_dinheiro(historico: Historico):
 
         if Conta.status == Status.INATIVO:
             raise ValueError('Conta esta inativa')
+            
 
         if historico.tipo == Tipos.ENTRADA:
             conta.valor += historico.valor
@@ -102,12 +103,9 @@ def criar_grafico_por_conta():
         for i in contas:
             total.append(i.valor)
 
-        plt.bar(bancos,total)
-        plt.show()
-        
 
 
-#criar_grafico_por_conta()
+# criar_grafico_por_conta()
 # x = buscar_historico_entre_datas(
 # date.today() - timedelta(days=1), date.today() + timedelta(days=1))
 
@@ -118,7 +116,6 @@ def criar_grafico_por_conta():
 # criar_conta(conta)
 # print(listar_contas())
 # desativar_conta(3)
-
 """  for i in listar_contas():
     print(i.banco)  """
 # print(total_contas())
